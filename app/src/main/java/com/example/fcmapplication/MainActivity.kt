@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -27,8 +28,16 @@ class MainActivity : AppCompatActivity() {
                     // Log and toast
                     val msg = token
                     Log.d("Token", msg)
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
                 })
+        }
+
+        btn_topic.setOnClickListener {
+            FirebaseMessaging.getInstance().subscribeToTopic("global")
+                .addOnCompleteListener { task ->
+                    Log.d("topic", task.toString())
+                    Toast.makeText(this, "topic", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 }
